@@ -1,0 +1,94 @@
+#   /*
+#    * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
+#    *
+#    * Licensed under the Apache License, Version 2.0 (the "License");
+#    * you may not use this file except in compliance with the License.
+#    * You may obtain a copy of the License at
+#    *
+#    *   http://www.apache.org/licenses/LICENSE-2.0
+#    *
+#    * Unless required by applicable law or agreed to in writing, software
+#    * distributed under the License is distributed on an "AS IS" BASIS,
+#    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    * See the License for the specific language governing permissions and
+#    * limitations under the License.
+#    *
+#    */
+# tomcat
+server:
+  port: 5555
+  compression:
+    enabled: true
+  ssl:
+    # 开启证书
+    enabled: @SSL-ENABLED@
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: false
+  forward-headers-strategy: native
+# spring
+spring:
+  application:
+    name: @pom.artifactId@
+  profiles:
+    # dev|test|prod
+    active: @PROFILE-ACTIVE@
+  webflux:
+    multipart:
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-headers-size: 20
+      max-in-memory-size: 512
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # key可以自定义
+        db0:
+          nacos:
+            server-addr: @NACOS-DISCOVERY-ADDRESS@
+            namespace: @NACOS-NAMESPACE@
+            data-id: gateway-flow.json
+            rule-type: gw_flow # 网关规则
+            group-id: @NACOS-GROUP@
+            data-type: json
+    # loadbalancer
+    loadbalancer:
+      cache:
+        caffeine:
+          spec: initialCapacity=256,expireAfterWrite=35s
+        enabled: true
+      nacos:
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+    # gateway
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      httpclient:
+        ssl:
+          # 信任所有下游证书
+          use-insecure-trust-manager: true
+        # netty日志
+        wiretap: false
+      httpserver:
+        # netty日志
+        wiretap: false
+
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml

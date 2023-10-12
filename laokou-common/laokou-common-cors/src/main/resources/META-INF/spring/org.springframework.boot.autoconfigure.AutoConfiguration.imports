@@ -1,0 +1,2 @@
+org.laokou.common.cors.config.auto.CorsAutoConfig
+org.laokou.common.cors.config.HttpMessageConverterConfig

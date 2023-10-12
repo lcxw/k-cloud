@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-auth</artifactId>
+        <version>${laokou.version}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>laokou-auth-infrastructure</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-auth-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-auth-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-mybatis-plus</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.laokou</groupId>
+                    <artifactId>laokou-common-openapi-doc</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-sensitive</artifactId>
+        </dependency>
+        <!-- 解析客户端操作系统、浏览器等 -->
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+        </dependency>
+<!--        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-shardingsphere</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>-->
+    </dependencies>
+
+</project>
